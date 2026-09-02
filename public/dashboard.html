@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - سَنَد | Sanad</title>
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/9QK3SShV/Icon-Logo.jpg">
+    <style>
+        /* ===== BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        body.en {
+            direction: ltr;
+        }
+        body.ar {
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+        .brand-name span {
+            color: #d32f2f;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid #d1d9e6;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #4a5b6b;
+            font-size: 0.85rem;
+        }
+
+        .lang-btn.active {
+            background: #1a2a3a;
+            color: white;
+            border-color: #1a2a3a;
+        }
+
+        .btn-logout {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-logout:hover {
+            background: #b71c1c;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            color: #4a5b6b;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .tab-btn.active {
+            background: #1a2a3a;
+            color: white;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ===== TAB CONTENT ===== */
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 600px;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #1a2a3a;
+            font-weight: 600;
+            padding: 14px 12px;
+            text-align: start;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-new {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .status-contacted {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .status-called {
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+        .status-resolved {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+
+        .status-select {
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d9e6;
+            font-weight: 500;
+            background: white;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .header-actions {
+                justify-content: center;
+            }
+            .brand {
+                justify-content: center;
+            }
+            .tabs {
+                justify-content: center;
+            }
+            .tab-btn {
+                flex: 1;
+                min-width: 100px;
+                text-align: center;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            table {
+                font-size: 0.85rem;
+                min-width: 500px;
+            }
+            th,
+            td {
+                padding: 8px 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 0;
+            }
+            .tab-content {
+                padding: 12px;
+            }
+            table {
+                font-size: 0.75rem;
+                min-width: 400px;
+            }
+            .brand-name {
+                font-size: 1.2rem;
+            }
+            .brand-logo {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        .tab-btn:focus-visible,
+        .lang-btn:focus-visible,
+        .btn-logout:focus-visible {
+            outline: 4px solid #ffb300;
+            outline-offset: 2px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #4a5b6b;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #4a5b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <img src="https://i.postimg.cc/k4P0MbGy/Primary-Logo.jpg" alt="Sanad Logo" class="brand-logo">
+                <h1 class="brand-name">سَنَد <span>|</span> Sanad</h1>
+            </div>
+            <div class="header-actions">
+                <div class="lang-toggle" role="group" aria-label="Language selector">
+                    <button class="lang-btn active" data-lang="ar" aria-pressed="true">العربية</button>
+                    <button class="lang-btn" data-lang="en" aria-pressed="false">English</button>
+                </div>
+                <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <nav class="tabs" role="tablist">
+            <button class="tab-btn active" data-tab="patients" role="tab" aria-selected="true" id="tabPatients">المرضى</button>
+            <button class="tab-btn" data-tab="followers" role="tab" aria-selected="false" id="tabFollowers">المتابعون</button>
+            <button class="tab-btn" data-tab="alerts" role="tab" aria-selected="false" id="tabAlerts">التنبيهات</button>
+        </nav>
+
+        <!-- Tab: Patients -->
+        <div class="tab-content active" id="patientsTab" role="tabpanel">
+            <div id="patientsContainer"><div class="loading">جاري التحميل...</div></div>
+        </div>
+
+        <!-- Tab: Followers -->
+        <div class="tab-content" id="followersTab" role="tabpanel">
+            <div id="followersContainer"><div class="loading">جاري التحميل...</div></div>
+        </div>
+
+        <!-- Tab: Alerts -->
+        <div class="tab-content" id="alertsTab" role="tabpanel">
+            <div id="alertsContainer"><div class="loading">جاري التحميل...</div></div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // TRANSLATIONS
+        // =============================================
+        const translations = {
+            ar: {
+                title: 'لوحة التحكم - سَنَد | Sanad',
+                patients: 'المرضى',
+                followers: 'المتابعون',
+                alerts: 'التنبيهات',
+                logout: 'تسجيل الخروج',
+                loading: 'جاري التحميل...',
+                empty: 'لا توجد بيانات.',
+                id: 'المعرف',
+                name: 'الاسم',
+                age: 'العمر',
+                gender: 'الجنس',
+                phone: 'الهاتف',
+                bloodType: 'فصيلة الدم',
+                medication: 'العلاج',
+                address: 'العنوان',
+                email: 'البريد الإلكتروني',
+                registered: 'تاريخ التسجيل',
+                linkedPatient: 'المريض المرتبط',
+                patient: 'المريض',
+                emergencyTime: 'وقت الطوارئ',
+                location: 'الموقع',
+                status: 'الحالة',
+                actions: 'إجراءات',
+                update: 'تحديث',
+                new: 'جديد',
+                contacted: 'تم التواصل',
+                called: 'تم الاتصال بالطوارئ',
+                resolved: 'تم الحل',
+                // Alerts
+                alertId: 'معرف التنبيه',
+                alertPatient: 'المريض',
+                alertPhone: 'الهاتف',
+                alertTime: 'وقت الطوارئ',
+                alertLocation: 'الموقع الحالي',
+                alertAddress: 'العنوان',
+                alertFollower: 'المتابع',
+                alertStatus: 'الحالة',
+                // Headers
+                patientsHeader: 'قائمة المرضى',
+                followersHeader: 'قائمة المتابعين',
+                alertsHeader: 'تنبيهات الطوارئ'
+            },
+            en: {
+                title: 'Dashboard - Sanad | سَنَد',
+                patients: 'Patients',
+                followers: 'Followers',
+                alerts: 'Alerts',
+                logout: 'Logout',
+                loading: 'Loading...',
+                empty: 'No data available.',
+                id: 'ID',
+                name: 'Name',
+                age: 'Age',
+                gender: 'Gender',
+                phone: 'Phone',
+                bloodType: 'Blood Type',
+                medication: 'Medication',
+                address: 'Address',
+                email: 'Email',
+                registered: 'Registered',
+                linkedPatient: 'Linked Patient',
+                patient: 'Patient',
+                emergencyTime: 'Emergency Time',
+                location: 'Location',
+                status: 'Status',
+                actions: 'Actions',
+                update: 'Update',
+                new: 'New',
+                contacted: 'Contacted',
+                called: 'Emergency Called',
+                resolved: 'Resolved',
+                alertId: 'Alert ID',
+                alertPatient: 'Patient',
+                alertPhone: 'Phone',
+                alertTime: 'Emergency Time',
+                alertLocation: 'Current Location',
+                alertAddress: 'Address',
+                alertFollower: 'Follower',
+                alertStatus: 'Status',
+                patientsHeader: 'Patients List',
+                followersHeader: 'Followers List',
+                alertsHeader: 'Emergency Alerts'
+            }
+        };
+
+        // =============================================
+        // STATE
+        // =============================================
+        let currentLang = localStorage.getItem('sanad-lang') || 'ar';
+        let currentTab = 'patients';
+
+        // =============================================
+        // DOM REFS
+        // =============================================
+        const html = document.documentElement;
+        const body = document.body;
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const patientsContainer = document.getElementById('patientsContainer');
+        const followersContainer = document.getElementById('followersContainer');
+        const alertsContainer = document.getElementById('alertsContainer');
+
+        // =============================================
+        // LANGUAGE
+        // =============================================
+        function applyLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            document.title = t.title;
+            document.getElementById('tabPatients').textContent = t.patients;
+            document.getElementById('tabFollowers').textContent = t.followers;
+            document.getElementById('tabAlerts').textContent = t.alerts;
+            logoutBtn.textContent = t.logout;
+
+            if (lang === 'ar') {
+                html.lang = 'ar';
+                body.className = 'ar';
+                html.dir = 'rtl';
+            } else {
+                html.lang = 'en';
+                body.className = 'en';
+                html.dir = 'ltr';
+            }
+
+            langBtns.forEach(btn => {
+                const isActive = btn.dataset.lang === lang;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            localStorage.setItem('sanad-lang', lang);
+
+            // Re-render current tab
+            renderCurrentTab();
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                applyLanguage(this.dataset.lang);
+            });
+        });
+
+        // =============================================
+        // TABS
+        // =============================================
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+
+                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                document.getElementById(this.dataset.tab + 'Tab').classList.add('active');
+
+                currentTab = this.dataset.tab;
+                renderCurrentTab();
+            });
+        });
+
+        // =============================================
+        // RENDER FUNCTIONS
+        // =============================================
+        function renderCurrentTab() {
+            switch (currentTab) {
+                case 'patients':
+                    renderPatients();
+                    break;
+                case 'followers':
+                    renderFollowers();
+                    break;
+                case 'alerts':
+                    renderAlerts();
+                    break;
+            }
+        }
+
+        async function renderPatients() {
+            const t = translations[currentLang];
+            patientsContainer.innerHTML = `<div class="loading">${t.loading}</div>`;
+
+            try {
+                const res = await fetch('/api/admin/patients');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+
+                if (!data || data.length === 0) {
+                    patientsContainer.innerHTML = `<div class="empty">${t.empty}</div>`;
+                    return;
+                }
+
+                let htmlTable = `<h3>${t.patientsHeader}</h3><table><thead><tr>
+                    <th>${t.id}</th><th>${t.name}</th><th>${t.age}</th>
+                    <th>${t.gender}</th><th>${t.phone}</th>
+                    <th>${t.bloodType}</th><th>${t.medication}</th>
+                    <th>${t.address}</th><th>${t.email}</th><th>${t.registered}</th>
+                </tr></thead><tbody>`;
+
+                data.forEach(p => {
+                    htmlTable += `<tr>
+                        <td>${p.id.slice(0, 8)}</td>
+                        <td>${p.name}</td>
+                        <td>${p.age || '-'}</td>
+                        <td>${p.gender || '-'}</td>
+                        <td>${p.phone || '-'}</td>
+                        <td>${p.blood_type || '-'}</td>
+                        <td>${p.medication || '-'}</td>
+                        <td>${p.address || '-'}</td>
+                        <td>${p.emergency_email || '-'}</td>
+                        <td>${new Date(p.created_at).toLocaleDateString()}</td>
+                    </tr>`;
+                });
+
+                htmlTable += '</tbody></table>';
+                patientsContainer.innerHTML = htmlTable;
+
+            } catch (error) {
+                patientsContainer.innerHTML = `<div class="empty">${t.empty}</div>`;
+                console.error('Patients error:', error);
+            }
+        }
+
+        async function renderFollowers() {
+            const t = translations[currentLang];
+            followersContainer.innerHTML = `<div class="loading">${t.loading}</div>`;
+
+            try {
+                const res = await fetch('/api/admin/followers');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+
+                if (!data || data.length === 0) {
+                    followersContainer.innerHTML = `<div class="empty">${t.empty}</div>`;
+                    return;
+                }
+
+                let htmlTable = `<h3>${t.followersHeader}</h3><table><thead><tr>
+                    <th>${t.name}</th><th>${t.phone}</th>
+                    <th>${t.linkedPatient}</th><th>${t.registered}</th>
+                </tr></thead><tbody>`;
+
+                data.forEach(f => {
+                    htmlTable += `<tr>
+                        <td>${f.name}</td>
+                        <td>${f.phone || '-'}</td>
+                        <td>${f.patients?.name || '—'}</td>
+                        <td>${new Date(f.created_at).toLocaleDateString()}</td>
+                    </tr>`;
+                });
+
+                htmlTable += '</tbody></table>';
+                followersContainer.innerHTML = htmlTable;
+
+            } catch (error) {
+                followersContainer.innerHTML = `<div class="empty">${t.empty}</div>`;
+                console.error('Followers error:', error);
+            }
+        }
+
+        async function renderAlerts() {
+            const t = translations[currentLang];
+            alertsContainer.innerHTML = `<div class="loading">${t.loading}</div>`;
+
+            try {
+                const res = await fetch('/api/admin/alerts');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+
+                if (!data || data.length === 0) {
+                    alertsContainer.innerHTML = `<div class="empty">${t.empty}</div>`;
+                    return;
+                }
+
+                const statusMap = {
+                    'New': t.new,
+                    'Contacted': t.contacted,
+                    'Emergency Services Called': t.called,
+                    'Resolved': t.resolved
+                };
+
+                const statusClassMap = {
+                    'New': 'status-new',
+                    'Contacted': 'status-contacted',
+                    'Emergency Services Called': 'status-called',
+                    'Resolved': 'status-resolved'
+                };
+
+                let htmlTable = `<h3>${t.alertsHeader}</h3><table><thead><tr>
+                    <th>${t.alertId}</th><th>${t.alertPatient}</th>
+                    <th>${t.alertPhone}</th><th>${t.alertTime}</th>
+                    <th>${t.alertLocation}</th><th>${t.alertStatus}</th>
+                    <th>${t.actions}</th>
+                </tr></thead><tbody>`;
+
+                data.forEach(a => {
+                    const statusKey = a.status || 'New';
+                    htmlTable += `<tr>
+                        <td>${a.id.slice(0, 8)}</td>
+                        <td>${a.patient_name || '-'}</td>
+                        <td>${a.phone || '-'}</td>
+                        <td>${new Date(a.emergency_time).toLocaleString()}</td>
+                        <td><a href="https://www.google.com/maps?q=${a.latitude},${a.longitude}" target="_blank" rel="noopener">📍</a></td>
+                        <td><span class="status-badge ${statusClassMap[statusKey] || 'status-new'}">${statusMap[statusKey] || statusKey}</span></td>
+                        <td>
+                            <select class="status-select" data-id="${a.id}" data-lang="${currentLang}">
+                                <option value="New" ${statusKey === 'New' ? 'selected' : ''}>${t.new}</option>
+                                <option value="Contacted" ${statusKey === 'Contacted' ? 'selected' : ''}>${t.contacted}</option>
+                                <option value="Emergency Services Called" ${statusKey === 'Emergency Services Called' ? 'selected' : ''}>${t.called}</option>
+                                <option value="Resolved" ${statusKey === 'Resolved' ? 'selected' : ''}>${t.resolved}</option>
+                            </select>
+                        </td>
+                    </tr>`;
+                });
+
+                htmlTable += '</tbody></table>';
+                alertsContainer.innerHTML = htmlTable;
+
+                // Attach change events to status selects
+                document.querySelectorAll('.status-select').forEach(select => {
+                    select.addEventListener('change', async function() {
+                        const alertId = this.dataset.id;
+                        const newStatus = this.value;
+                        const lang = this.dataset.lang || 'ar';
+
+                        try {
+                            const res = await fetch(`/api/admin/alerts/${alertId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ status: newStatus })
+                            });
+
+                            if (!res.ok) {
+                                alert('Failed to update status');
+                                // Revert to previous value? For simplicity, we'll reload the tab.
+                                renderAlerts();
+                            } else {
+                                // Success - refresh the alerts list
+                                renderAlerts();
+                            }
+                        } catch (error) {
+                            console.error('Update status error:', error);
+                            alert('Error updating status');
+                        }
+                    });
+                });
+
+            } catch (error) {
+                alertsContainer.innerHTML = `<div class="empty">${t.empty}</div>`;
+                console.error('Alerts error:', error);
+            }
+        }
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        logoutBtn.addEventListener('click', async function() {
+            try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = '/login.html';
+            }
+        });
+
+        // =============================================
+        // AUTH CHECK - Redirect if not admin
+        // =============================================
+        async function checkAuth() {
+            try {
+                const res = await fetch('/api/auth/status');
+                const data = await res.json();
+                if (!data.authenticated || data.user?.type !== 'admin') {
+                    window.location.href = '/login.html';
+                }
+            } catch (error) {
+                window.location.href = '/login.html';
+            }
+        }
+
+        // =============================================
+        // INIT
+        // =============================================
+        applyLanguage(currentLang);
+        checkAuth();
+    </script>
+</body>
+</html>
