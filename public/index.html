@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>سَنَد | Sanad</title>
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/9QK3SShV/Icon-Logo.jpg">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        body.en {
+            direction: ltr;
+        }
+
+        body.ar {
+            direction: rtl;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== HEADER & LOGO ===== */
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-name {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-name span {
+            color: #d32f2f;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #4a5b6b;
+            margin-bottom: 32px;
+            padding: 0 10px;
+            line-height: 1.6;
+        }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .lang-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid #d1d9e6;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #4a5b6b;
+        }
+
+        .lang-btn.active {
+            background: #1a2a3a;
+            color: white;
+            border-color: #1a2a3a;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 24px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            min-height: 72px;
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background: #d32f2f;
+        }
+        .btn-primary:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+        }
+
+        .btn-secondary {
+            background: #2c3e50;
+        }
+        .btn-secondary:hover {
+            background: #1a2a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #2c3e50;
+            border: 2px solid #2c3e50;
+        }
+        .btn-outline:hover {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .btn-sm {
+            font-size: 1rem;
+            padding: 14px 20px;
+            min-height: 56px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px 16px;
+                border-radius: 24px;
+            }
+            .brand-name {
+                font-size: 1.8rem;
+            }
+            .brand-logo {
+                width: 48px;
+                height: 48px;
+            }
+            .btn {
+                font-size: 1rem;
+                padding: 16px;
+                min-height: 64px;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        .btn:focus-visible,
+        .lang-btn:focus-visible {
+            outline: 4px solid #ffb300;
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" role="main">
+        <!-- Brand -->
+        <div class="brand">
+            <img src="https://i.postimg.cc/k4P0MbGy/Primary-Logo.jpg" alt="سَنَد | Sanad Logo" class="brand-logo">
+            <h1 class="brand-name">سَنَد <span>|</span> Sanad</h1>
+        </div>
+
+        <!-- Tagline -->
+        <p class="tagline" id="tagline">لأنك مش لوحدك وقت الطوارئ</p>
+
+        <!-- Language Toggle -->
+        <div class="lang-toggle" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="ar" aria-pressed="true">العربية</button>
+            <button class="lang-btn" data-lang="en" aria-pressed="false">English</button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+            <a href="#" class="btn btn-primary" id="emergencyBtn">
+                <span>🆘</span>
+                <span id="emergencyText">أحتاج مساعدة</span>
+            </a>
+            <a href="follow-sick.html" class="btn btn-secondary" id="followBtn">
+                <span>👤</span>
+                <span id="followText">أتابع مريضًا</span>
+            </a>
+            <a href="login.html" class="btn btn-outline btn-sm" id="adminBtn">
+                <span id="adminText">دخول المشرف</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ===== TRANSLATIONS =====
+        const translations = {
+            ar: {
+                tagline: 'لأنك مش لوحدك وقت الطوارئ',
+                emergency: 'أحتاج مساعدة',
+                follow: 'أتابع مريضًا',
+                admin: 'دخول المشرف',
+                pageTitle: 'سَنَد | Sanad'
+            },
+            en: {
+                tagline: 'You\'re Not Alone in an Emergency',
+                emergency: 'I Need Help',
+                follow: 'Follow a Patient',
+                admin: 'Admin Login',
+                pageTitle: 'Sanad | سَنَد'
+            }
+        };
+
+        // ===== DOM ELEMENTS =====
+        const html = document.documentElement;
+        const body = document.body;
+        const taglineEl = document.getElementById('tagline');
+        const emergencyText = document.getElementById('emergencyText');
+        const followText = document.getElementById('followText');
+        const adminText = document.getElementById('adminText');
+        const langBtns = document.querySelectorAll('.lang-btn');
+
+        // ===== LANGUAGE PERSISTENCE =====
+        function getStoredLang() {
+            return localStorage.getItem('sanad-lang') || 'ar';
+        }
+
+        function setStoredLang(lang) {
+            localStorage.setItem('sanad-lang', lang);
+        }
+
+        // ===== APPLY LANGUAGE =====
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+
+            // Update UI
+            taglineEl.textContent = t.tagline;
+            emergencyText.textContent = t.emergency;
+            followText.textContent = t.follow;
+            adminText.textContent = t.admin;
+            document.title = t.pageTitle;
+
+            // Update RTL/LTR
+            if (lang === 'ar') {
+                html.lang = 'ar';
+                body.className = 'ar';
+                html.dir = 'rtl';
+            } else {
+                html.lang = 'en';
+                body.className = 'en';
+                html.dir = 'ltr';
+            }
+
+            // Update button states
+            langBtns.forEach(btn => {
+                const isActive = btn.dataset.lang === lang;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            // Store preference
+            setStoredLang(lang);
+        }
+
+        // ===== EVENT LISTENERS =====
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                applyLanguage(lang);
+            });
+        });
+
+        // ===== EMERGENCY BUTTON LOGIC =====
+        document.getElementById('emergencyBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = getStoredLang();
+            // Redirect to patient login or emergency page
+            // For now, we'll check if user is logged in via session
+            fetch('/api/auth/status')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.authenticated && data.user.type === 'patient') {
+                        window.location.href = '/patient-emergency.html';
+                    } else {
+                        window.location.href = '/patient-login.html';
+                    }
+                })
+                .catch(() => {
+                    window.location.href = '/patient-login.html';
+                });
+        });
+
+        // ===== INIT =====
+        applyLanguage(getStoredLang());
+    </script>
+</body>
+</html>
